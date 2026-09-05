@@ -32,7 +32,7 @@ hipfire v0.3.0 beta (DFlash2, q8 KV, MQ4V2) beats it on the same corpus:
 **95.1 t/s mean** — driven by tool-call/JSON turns (157 t/s) but loses prose.
 Which one wins "usable" is what the web bench decides.
 
-Full commands in RESULTS.md §6; every number in RESULTS.md §3–§5.
+Full serve commands in RESULTS.md §3 (Table B); every number in RESULTS.md §2–§4; lever verdicts in §6.
 
 ## Status
 
