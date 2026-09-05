@@ -1,0 +1,9 @@
+# run artifacts
+sites/*/
+!sites/.gitkeep
+logs/*.log
+!logs/.gitkeep
+
+# agent session state
+.pi-agent/
+node_modules/
