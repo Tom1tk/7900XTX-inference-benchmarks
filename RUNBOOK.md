@@ -18,16 +18,15 @@
 ## Procedure for a web-bench run
 
 1. Pick an unused index (see WEB_BENCH.md §5 port registry).
-2. Set the sudo password in `prompts/web-bench.md` stage 1 (currently `CHANGE_ME`).
-3. Kill any leftover engines: `pkill -f 'llama-serve[r]'; pkill -f 'hipfire serv[e]'`,
+2. Kill any leftover engines: `pkill -f 'llama-serve[r]'; pkill -f 'hipfire serv[e]'`,
    verify `rocm-smi --showmeminfo vram` shows idle.
-4. Run `./scripts/run-web-bench.sh <engine> <model> <label> <index> [args...]`.
+3. Run `./scripts/run-web-bench.sh <engine> <model> <label> <index> [args...]`.
    - hipfire runs: `thinking off` and speculation config are daemon-global — set
      with `hipfire config` first; the registry `dflash` sidecar patch from
      RESULTS.md §5 must be in place.
-5. The script preflights free VRAM, live-guards the card at `VRAM_LIMIT_MIB`
+4. The script preflights free VRAM, live-guards the card at `VRAM_LIMIT_MIB`
    (default 22000), and commits+pushes pass or fail. A failed run is data.
-6. After the run: review `sites/<label>/` by hand (quality table in WEB_BENCH.md
+5. After the run: review `sites/<label>/` by hand (quality table in WEB_BENCH.md
    §4), then update RESULTS.md's phase-5 table and the port registry.
 
 ## Work queue

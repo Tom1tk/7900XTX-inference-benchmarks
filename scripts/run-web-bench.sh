@@ -4,7 +4,7 @@
 # Usage: ./scripts/run-web-bench.sh <engine> <model-spec> <label> <index> [extra engine args...]
 #   engine      buun-vk | buun-hip | hipfire
 #   model-spec  path to a .gguf (buun engines) or hipfire registry tag (hipfire)
-#   label       e.g. p5-vk-q4km-mtp   (folder, systemd unit, and commit message all key off this)
+#   label       e.g. p5-vk-q4km-mtp   (folder and commit message both key off this)
 #   index       0,1,2,... unique per model version. Every port derives from it, so
 #               each site stays hosted after its run instead of fighting for :4000.
 #
@@ -299,8 +299,8 @@ python3 ./scripts/web_bench_metrics.py summarize \
     --out "$SUMMARY" --csv "$AGGREGATE"
 
 echo
-echo "Site should now be live at http://localhost:${SITE_PORT} (systemd unit ${LABEL}.service)"
-systemctl is-active "${LABEL}.service" 2>/dev/null || echo "NOTE: ${LABEL}.service is not active - the agent may not have completed stage 1"
+echo "Site should now be live at http://localhost:${SITE_PORT}"
+curl -sf -m 5 -o /dev/null "http://localhost:${SITE_PORT}" && echo "confirmed: site responds" || echo "NOTE: site is not responding - the agent may not have completed stage 1"
 
 # --- Commit and push (mandatory, pass or fail) ------------------------------
 git add -A

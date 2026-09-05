@@ -28,11 +28,11 @@ For each model version, `scripts/run-web-bench.sh`:
    session, in `sites/<label>/`.
 4. Tears down, summarizes, commits, and pushes.
 
-The prompts build an Express site about the model itself: a working page and
-systemd service (stage 1), an elaborate restyle with a JS interactive element
-(stage 2), and a canvas mini-game in a separate static file (stage 3). They are
-written to be completed **one-shot** — a model that stops to ask the operator a
-question has failed the stage, and that is a result worth recording.
+The prompts build an Express site about the model itself: a working page served
+as a background process (stage 1), an elaborate restyle with a JS interactive
+element (stage 2), and a canvas mini-game in a separate static file (stage 3).
+They are written to be completed **one-shot** — a model that stops to ask the
+operator a question has failed the stage, and that is a result worth recording.
 
 Stage 3 in particular is the stress test the earlier phases can't provide: a
 model that produces plausible-looking but broken game logic, or that mangles the
@@ -125,7 +125,7 @@ RESULTS.md:
 
 | Check | Pass condition |
 |---|---|
-| Stage 1 | Site serves on its port; `<label>.service` is active |
+| Stage 1 | Site responds on its port from a background process |
 | Stage 2 | Restyle applied; the JS interactive element actually works |
 | Stage 3 | Game present, `public/game.js` loaded via `<script src>`, hook falls/reels on hold-release, fish are catchable, score increments |
 | One-shot | Did the model complete each stage without asking a question? |
@@ -149,9 +149,9 @@ Update this table when a run claims an index. Never reuse one.
 - **`PI_OFFLINE=1` is required** — the script sets it. Without it `pi` blocks on
   startup network operations (verified on the P100 rig; re-verify if this box
   behaves differently).
-- Node.js and `npm` available to the agent, plus sudo (the prompt supplies the
-  password) for `systemctl`. **Edit the sudo password in stage 1 of
-  `prompts/web-bench.md` to this machine's password before running.**
+- Node.js and `npm` available to the agent. No sudo/systemd needed — this rig is
+  an interactive desktop, not a server container; sites run as ordinary
+  background processes and stay up after the run.
 - The agent's `pi` config is written per-run into `sites/<label>/.pi-agent/`.
   The operator's own pi config is never touched.
 - hipfire runs need `~/.hipfire/bin` on PATH and the registry sidecar patch from
