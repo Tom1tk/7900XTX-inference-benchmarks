@@ -141,6 +141,7 @@ Update this table when a run claims an index. Never reuse one.
 
 | Index | Site port | Label | Engine / model | Status |
 |---|---|---|---|---|
+| 0 | 4000 | `p5-vk-q4km-mtp` | buun-vk, Q4_K_M + MTP n3, q4_0 KV, 64k | **ok 1357 s** — site live, quality review pending |
 | _(none yet)_ | | | | |
 
 ## 6. Prerequisites

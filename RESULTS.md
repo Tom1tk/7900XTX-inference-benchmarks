@@ -172,5 +172,5 @@ Open questions: quality parity (MQ4V2 + DFlash2 math) via NIAH gate; code-class 
 | 0 smoke · 1 engine baseline · 2 drafter | Done |
 | 3 quant sweep | Q4_K_M done; Q3_K_XL pulled, pending |
 | 4 backend/lever tests | Done (Table C) |
-| 5 agentic web build | Tooling ready (WEB_BENCH.md); first runs queued (RUNBOOK §work queue) |
+| 5 agentic web build | **First run done.** `p5-vk-q4km-mtp` (Vulkan+MTP, Q4_K_M, 64k ctx): **1357 s total** (S1 245 / S2 769 / S3 331), decode 48.6 t/s avg, prefill 329.6 t/s, peak VRAM 23.8 GB, site live :4000. Findings: 32k ctx overflowed at stage 2 (agent session >32k → bumped default to 64k); pi 0.85 nests project folder one level deep (cosmetic). Control (no MTP) and hipfire runs pending |
 | 6 quality gate | Not started |

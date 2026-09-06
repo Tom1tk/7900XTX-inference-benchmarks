@@ -278,8 +278,9 @@ MONITOR_PID=""
 trap - EXIT
 
 # --- Telemetry summary ------------------------------------------------------
-PEAK_VRAM=$(awk -F'|' 'NR>0 {
-    split($2, v, " "); if (v[1]+0 > max) max = v[1]+0
+PEAK_VRAM=$(awk -F'|' '{
+    split($1, v, " "); val = v[2] + 0
+    if (val > max) max = val
 } END { print (max ? max : "n/a") }' "$VRAM_LOG")
 
 echo "=== finished in ${ELAPSED:-?}s | ${OUTCOME} | peak VRAM ${PEAK_VRAM} MiB ==="
