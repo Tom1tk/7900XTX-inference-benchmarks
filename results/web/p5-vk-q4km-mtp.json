@@ -1,0 +1,106 @@
+{
+  "label": "p5-vk-q4km-mtp",
+  "engine": "buun-vk",
+  "model": "/home/tom/Documents/Qwen3.8-27B-UD-Q4_K_M.gguf",
+  "site_port": 4000,
+  "total_task_seconds": 1468.0,
+  "stage_seconds": {
+    "3": 247,
+    "2": 1065,
+    "1": 144
+  },
+  "overall": {
+    "requests": 25,
+    "prompt_tokens": 75017,
+    "generated_tokens": 55795,
+    "prefill_tps": {
+      "avg": 315.05,
+      "min": 108.99,
+      "max": 707.18,
+      "n": 25
+    },
+    "decode_tps": {
+      "avg": 48.07,
+      "min": 34.85,
+      "max": 76.8,
+      "n": 25
+    },
+    "wall_s": {
+      "avg": 57.84,
+      "min": 3.59,
+      "max": 392.88,
+      "n": 25
+    }
+  },
+  "stages": {
+    "1": {
+      "requests": 10,
+      "prompt_tokens": 3978,
+      "generated_tokens": 6989,
+      "prefill_tps": {
+        "avg": 432.52,
+        "min": 190.29,
+        "max": 707.18,
+        "n": 10
+      },
+      "decode_tps": {
+        "avg": 58.09,
+        "min": 38.04,
+        "max": 76.8,
+        "n": 10
+      },
+      "wall_s": {
+        "avg": 13.97,
+        "min": 3.59,
+        "max": 46.08,
+        "n": 10
+      }
+    },
+    "2": {
+      "requests": 10,
+      "prompt_tokens": 70490,
+      "generated_tokens": 38348,
+      "prefill_tps": {
+        "avg": 265.25,
+        "min": 108.99,
+        "max": 663.61,
+        "n": 10
+      },
+      "decode_tps": {
+        "avg": 40.91,
+        "min": 34.86,
+        "max": 55.41,
+        "n": 10
+      },
+      "wall_s": {
+        "avg": 106.2,
+        "min": 6.37,
+        "max": 392.88,
+        "n": 10
+      }
+    },
+    "3": {
+      "requests": 5,
+      "prompt_tokens": 549,
+      "generated_tokens": 10458,
+      "prefill_tps": {
+        "avg": 179.72,
+        "min": 110.54,
+        "max": 313.64,
+        "n": 5
+      },
+      "decode_tps": {
+        "avg": 42.36,
+        "min": 34.85,
+        "max": 51.99,
+        "n": 5
+      },
+      "wall_s": {
+        "avg": 48.85,
+        "min": 7.07,
+        "max": 192.05,
+        "n": 5
+      }
+    }
+  }
+}
