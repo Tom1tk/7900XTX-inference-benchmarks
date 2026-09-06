@@ -3,8 +3,10 @@
   "engine": "hipfire",
   "model": "qwen3.8:27b",
   "site_port": 4002,
-  "total_task_seconds": 0.0,
-  "stage_seconds": {},
+  "total_task_seconds": 26.0,
+  "stage_seconds": {
+    "1": 14
+  },
   "overall": {
     "requests": 0,
     "prompt_tokens": 0,
