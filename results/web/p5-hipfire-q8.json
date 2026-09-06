@@ -1,0 +1,32 @@
+{
+  "label": "p5-hipfire-q8",
+  "engine": "hipfire",
+  "model": "qwen3.8:27b",
+  "site_port": 4002,
+  "total_task_seconds": 0.0,
+  "stage_seconds": {},
+  "overall": {
+    "requests": 0,
+    "prompt_tokens": 0,
+    "generated_tokens": 0,
+    "prefill_tps": {
+      "avg": null,
+      "min": null,
+      "max": null,
+      "n": 0
+    },
+    "decode_tps": {
+      "avg": null,
+      "min": null,
+      "max": null,
+      "n": 0
+    },
+    "wall_s": {
+      "avg": null,
+      "min": null,
+      "max": null,
+      "n": 0
+    }
+  },
+  "stages": {}
+}
