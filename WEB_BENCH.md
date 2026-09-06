@@ -152,7 +152,7 @@ Update this table when a run claims an index. Never reuse one.
 
 | Index | Site port | Label | Engine / model | Status |
 |---|---|---|---|---|
-| 0 | 4000 | `p5-vk-q4km-mtp` | buun-vk, Q4_K_M + MTP n3, q4_0 KV, 64k | **speed ok 1282 s** (S1 96/S2 877/S3 297, accept 72.1%) — **quality FAIL**: stage-2 shipped unclosed `<script>` → reveal-on-scroll never fires → page renders as background+ticker only |
+| 0 | 4000 | `p5-vk-q4km-mtp` | buun-vk, Q4_K_M + MTP n3, q4_0 KV, 64k | **wiped** — first dialed attempt speed ok (1282 s, accept 72.1%) but site FAIL (unclosed `<script>`); artifacts removed, owner requested re-run. Superseded attempt in git history (`73c6aa0`, `4b8825d`) |
 | 1 | 4001 | `p5-vk-q4km` | buun-vk, Q4_K_M, q4_0 KV, 64k | **ok 1630 s (dialed)** — S1 177/S2 1018/S3 428, decode 31.6 avg, peak VRAM 17.2 GiB; HTML balanced (2/2 script tags) — renders |
 | 2 | 4002 | `p5-hipfire-q8` | hipfire DFlash2, q8 KV | **VOIDED — engine fail**: hipfire v0.3.0 beta returns tool calls as plain text (no OpenAI `tool_calls`, `finish_reason: stop`) → pi issues 1 request/stage and exits; 29 s "garbage-success". Probe: `/tmp/opencode/hipfire-tools-probe.json` — calculator request returned `<tool_call>\n<function=calculator>…` as content |
 | _(none further)_ | | | | |
