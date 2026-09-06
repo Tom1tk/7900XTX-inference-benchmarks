@@ -135,6 +135,17 @@ Record the failure mode, not just pass/fail — "produced a game that never
 increments the score" and "mangled every `write` call" are very different
 verdicts about a config.
 
+### 4.1 Site quality review log
+
+Full diagnoses; never fix the artifact for the model — the shipped page is the
+datum.
+
+| Run | Verdict | Diagnosis |
+|---|---|---|
+| `p5-vk-q4km-mtp` (idx 0, dialed) | **FAIL — page unrenderable** | Model's one-shot HTML error. `index.html` (35 227 B) has 2 script opens vs 1 close: the `game.js` tag closes, but the inline script (line 527 → EOF — ticker loop, the IntersectionObserver adding `.in`, the live-generation demo) is never terminated → the browser drops the whole block unexecuted. CSS gates 36 `.reveal` elements at `opacity: 0` until JS adds `.in`, so hero, all 6 sections and the fishing canvas stay invisible. `game.js` parses clean (`node -e "new Function(...)"`). All content exists in source; only the reveal mechanism dies. Not a hosting or harness issue |
+| `p5-vk-q4km` (idx 1, dialed) | **PASS** | 2/2 balanced script tags, reveal JS executes, renders fully |
+| `p5-hipfire-q8` (idx 2) | **DNF — engine** | see §5: hipfire lacks OpenAI `tool_calls`; no site built |
+
 ## 5. Port registry
 
 Update this table when a run claims an index. Never reuse one.
