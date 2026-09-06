@@ -1,0 +1,82 @@
+{
+  "label": "p5-vk-q4km-mtp",
+  "engine": "buun-vk",
+  "model": "/home/tom/Documents/Qwen3.8-27B-UD-Q4_K_M.gguf",
+  "site_port": 4000,
+  "total_task_seconds": 950.0,
+  "stage_seconds": {
+    "2": 798,
+    "1": 140
+  },
+  "overall": {
+    "requests": 20,
+    "prompt_tokens": 88172,
+    "generated_tokens": 39025,
+    "prefill_tps": {
+      "avg": 346.93,
+      "min": 82.52,
+      "max": 747.67,
+      "n": 20
+    },
+    "decode_tps": {
+      "avg": 55.42,
+      "min": 35.8,
+      "max": 79.24,
+      "n": 20
+    },
+    "wall_s": {
+      "avg": 46.69,
+      "min": 1.94,
+      "max": 271.54,
+      "n": 20
+    }
+  },
+  "stages": {
+    "1": {
+      "requests": 12,
+      "prompt_tokens": 2789,
+      "generated_tokens": 6439,
+      "prefill_tps": {
+        "avg": 228.97,
+        "min": 82.52,
+        "max": 690.67,
+        "n": 12
+      },
+      "decode_tps": {
+        "avg": 57.2,
+        "min": 39.37,
+        "max": 75.6,
+        "n": 12
+      },
+      "wall_s": {
+        "avg": 11.33,
+        "min": 1.94,
+        "max": 64.31,
+        "n": 12
+      }
+    },
+    "2": {
+      "requests": 8,
+      "prompt_tokens": 85383,
+      "generated_tokens": 32586,
+      "prefill_tps": {
+        "avg": 523.88,
+        "min": 83.01,
+        "max": 747.67,
+        "n": 8
+      },
+      "decode_tps": {
+        "avg": 52.76,
+        "min": 35.8,
+        "max": 79.24,
+        "n": 8
+      },
+      "wall_s": {
+        "avg": 99.74,
+        "min": 11.42,
+        "max": 271.54,
+        "n": 8
+      }
+    }
+  }
+}

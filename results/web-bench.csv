@@ -1,0 +1,2 @@
+label,engine,model,site_port,total_s,requests,prompt_tokens,generated_tokens,prefill_avg,prefill_min,prefill_max,decode_avg,decode_min,decode_max
+p5-vk-q4km-mtp,buun-vk,Qwen3.8-27B-UD-Q4_K_M.gguf,4000,950.0,20,88172,39025,346.93,82.52,747.67,55.42,35.8,79.24
