@@ -168,7 +168,7 @@ Open questions: quality parity (MQ4V2 + DFlash2 math) via NIAH gate; code-class 
 | hipfire DFlash2 q8 | **Conditional** | +34% mixed mean, +110% tool, -17% prose; quality gate pending |
 | hipfire asym3 KV | **Reject** | 3-bit, below floor; prefill 51 t/s |
 | Qwen instruct sampling set (0.7/0.8/20/0/1.5) | **Adopt (web bench onward)** | guide-mandated; both engines re-dialed identically; earlier benches ran @llama defaults 0.8 — flagged |
-| hipfire OpenAI tool calling | **Reject (v0.3.0 beta)** | probe: request with `tools` returns the call as plain text `<tool_call>…` in `content`, `finish_reason: stop` — no `tool_calls` field; strict agents (pi/opencode) see turn-end and stop. The +110% tool-call decode from §3 measured tool-OUTPUT *text* decoding, not function calling. Re-test when hipfire ships tools |
+| hipfire OpenAI tool calling | **Reject (v0.3.0 beta, root-caused)** | Qwen3.8 emits its native XML tool-call block; hipfire's `extract_tool_calls_from_text` (crates/hipfire-runtime/src/emit_text.rs, TOOL_CALL_OPEN const) only recognizes the Qwen3.5/3.6 legacy opener → no `tool_calls` field, plain text in `content`, `finish_reason: stop` (probe: `/tmp/opencode/hipfire-tools-probe.json`, stream+non-stream both). Docs (docs/SERVE.md) promise tool_calls but validation matrix was Qwen3.6 — arch-format gap, not config/template. Upstream fix: teach the emit layer the Qwen3.8 format. Plain-chat serving unaffected (fair test §3 stands) |
 | Agent identity in stage-1 prompt | **Adopt (amended)** | run 1 (pre-amendment) confabulated a "4.2B on Raspberry Pi 5" persona from the label mnemonic `p5`; run 0 grounded correctly — stochastic; prompt now states full name + quant |
 
 ## 7. Phase status
