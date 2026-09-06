@@ -177,5 +177,5 @@ Open questions: quality parity (MQ4V2 + DFlash2 math) via NIAH gate; code-class 
 | 0 smoke · 1 engine baseline · 2 drafter | Done |
 | 3 quant sweep | Q4_K_M done; Q3_K_XL pulled, pending |
 | 4 backend/lever tests | Done (Table C) |
-| 5 agentic web build | **Dialed ladder in progress.** Run 0 `p5-vk-q4km-mtp` (dialed): **1282 s** (S1 96/S2 877/S3 297), decode 45.5 avg, prefill 249.6 avg, peak VRAM 23.1 GB, **MTP acceptance 72.1% mean** (vs ~62% @temp 0.8 — dialing bought +10 pts). Identity amendment verified: site self-describes as Qwen3.8-27B (7 mentions, zero Pi-5 confabulation). Exploratory undialed runs (1357/1743 s) voided, in git history. Control + hipfire pending |
+| 5 agentic web build | **Dialed ladder running.** Run 0 `p5-vk-q4km-mtp` (dialed): **1282 s**, decode 45.5 avg, **MTP acceptance 72.1% mean** (vs ~62% @temp 0.8) — but **quality FAIL**: stage-2 HTML shipped with unclosed `<script>` → `.reveal` scroll-gating never fires → page renders background/ticker only. Identity amendment verified (Qwen3.8-27B self-description, zero Pi-5 confabulation). First ladder's one-shot variance is the story: undialed MTP site rendered fine, dialed one broke. Control + hipfire pending |
 | 6 quality gate | Not started |
