@@ -31,14 +31,17 @@
 
 ## Work queue
 
-### Open
-1. Phase 5 web bench: p5-vk-q4km-mtp (index 0), p5-vk-q4km control (1), p5-hipfire-q8 (2).
-2. Q3_K_XL ladder (pulled): llama-bench + bench_mix + web bench if it wins VRAM headroom.
-3. MTP context ceiling binary search (32k→100k, Vulkan, keep ≥2 GB headroom).
+### Open (awaiting owner go — no runs until owner says so)
+1. **Quant × engine ladder, MTP on all** (owner policy: MTP everywhere, no downside observed):
+   - buun-hip + **turbo4 KV** + MTP 64k, Q4_K_M — tests the TurboQuant draw directly (turbo4 is HIP-only; SET_ROWS aborts on Vulkan). Micro-bench says turbo4 ≈ q4_0 speed (tg128 33.00 vs 32.64) — the real value is VRAM headroom; verify at agentic workload.
+   - mainline-hip + **Q3_K_XL** + MTP 64k (weights 12.24 GiB vs 15.33 → ~3 GiB headroom; candidate for a 100k+MTP attempt on the freed VRAM).
+   - mainline-hip + Q4_K_XL + MTP 64k (completeness; early benches suggest ≈Q4_K_M).
+   - build mainline **Vulkan** (`cmake -B build-vk -DGGML_VULKAN=ON`) → `mln-vk` backend-matched comparison.
+2. **hipfire re-entry**: root cause is the emit-layer extractor only knowing Qwen3.5/3.6 tool-call format; Qwen3.8 XML unrecognized (RESULTS §6). Upstream checked: origin/beta == our build (7b16762); master is ahead but emit_text.rs byte-identical — **no fix exists upstream**. Only path: local patch of `crates/hipfire-runtime/src/emit_text.rs` (add the Qwen3.8 XML opener + body parser beside the legacy one) + cargo rebuild of the daemon, keeping the stock binary as fallback. Then re-run the ladder leg. KV modes available: q8, asym2/3/4, fwht2/3/4 — asym3 is 3-bit (below owner q4 floor → excluded unless gated; it's what the 154 t/s localmaxxing record used).
+3. MTP context ceiling binary search (81k→100k, engine TBD).
 4. `--spec-draft-n-max` / `--spec-draft-p-min` sweep.
-5. hipfire: re-test web bench when tool calling (OpenAI tool_calls) ships — currently unusable for pi/opencode.
-6. Quality gate (NIAH) for q4_0/turbo4 KV and MQ4V2 — scheduled last on purpose.
-7. tinygrad 27B from TTY (46 t/s claimed).
+5. Quality gate (NIAH) for q4_0/turbo4 KV and MQ4V2 — scheduled last on purpose.
+6. tinygrad 27B from TTY (46 t/s claimed).
 
 ### Parked
 - VBR dynamic KV (HIP only, may help MTP+100k headroom).

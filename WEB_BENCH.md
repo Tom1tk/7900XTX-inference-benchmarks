@@ -152,7 +152,7 @@ Update this table when a run claims an index. Never reuse one.
 
 | Index | Site port | Label | Engine / model | Status |
 |---|---|---|---|---|
-| 0 | 4000 | `p5-vk-q4km-mtp` | buun-vk, Q4_K_M + MTP n3, q4_0 KV, 64k | **wiped** — first dialed attempt speed ok (1282 s, accept 72.1%) but site FAIL (unclosed `<script>`); artifacts removed, owner requested re-run. Superseded attempt in git history (`73c6aa0`, `4b8825d`) |
+| 0 | 4000 | `p5-vk-q4km-mtp` | buun-vk, Q4_K_M + MTP n3, q4_0 KV, 64k | **ok 1468 s (re-roll, dialed)** — S1 144/S2 1065/S3 247, peak VRAM 23.6 GiB; balanced HTML (2/2), identity grounded (9× Qwen), renders. First attempt (1282 s) wiped for broken site — 1282→1468 s across identical configs is the one-shot variance band |
 | 1 | 4001 | `p5-vk-q4km` | buun-vk, Q4_K_M, q4_0 KV, 64k | **ok 1630 s (dialed)** — S1 177/S2 1018/S3 428, decode 31.6 avg, peak VRAM 17.2 GiB; HTML balanced (2/2 script tags) — renders |
 | 2 | 4002 | `p5-mln-q4km-mtp` | **mainline** HIP (b10819), Q4_K_M + MTP n3, q4_0 KV, 64k | **ok 1131 s — LADDER LEADER** (S1 262/S2 601/S3 256), decode 49.7 avg, prefill 279.1, accept 72.3%, peak VRAM 21.2 GiB; HTML balanced, identity grounded (9× Qwen, 0× Pi-5); beats buun-vk MTP by 12% |
 | 3 | 4003 | `p5-hipfire-q8` | hipfire DFlash2, q8 KV | **VOIDED — engine fail** (attempts used :4002 before mainline claimed it; no site built): hipfire v0.3.0 beta returns tool calls as plain text (no OpenAI `tool_calls`, `finish_reason: stop`) → pi issues 1 request/stage and exits; 29 s "garbage-success". Root cause: emit-layer extractor only knows Qwen3.5/3.6 format (RESULTS §6). Re-test when tools ship |
@@ -170,6 +170,7 @@ Update this table when a run claims an index. Never reuse one.
 - The agent's `pi` config is written per-run into `sites/<label>/.pi-agent/`.
   The operator's own pi config is never touched.
 - **Sampling is dialed per the unsloth Qwen3.8-27B guide's instruct set** (temp 0.7, top_p 0.8, top_k 20, min_p 0, presence 1.5) — baked into `run-web-bench.sh` for llama engines and set as hipfire config overrides, so both engines sample identically. Do not run the ladder undialed (first attempt did: temp 0.8 defaults → voided).
+- **MTP is on for all ladder runs from now on** (owner decision — no downside observed: acceptance holds at ctx, +21-31% wall-clock). Controls without MTP are optional extras, not defaults.
 - Stage 1 states the model's real identity (Qwen3.8-27B, `{{QUANT}}`) — the pre-amendment prompt let the agent confabulate a persona out of the label mnemonic (`p5` → "Raspberry Pi 5").
 - hipfire runs need `~/.hipfire/bin` on PATH and the registry sidecar patch from
   RESULTS.md §5 (upstream bug at time of writing).
