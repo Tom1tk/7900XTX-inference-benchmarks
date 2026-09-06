@@ -23,7 +23,7 @@ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO"
 
 # --- Fixed parameters (see WEB_BENCH.md) ------------------------------------
-CTX="${CTX:-32768}"
+CTX="${CTX:-65536}"   # 32768 overflowed at stage 2 (pi 0.85 request hit 32827 tok)
 STAGE_TIMEOUT="${STAGE_TIMEOUT:-3600}"
 LOAD_TIMEOUT="${LOAD_TIMEOUT:-600}"
 VRAM_LIMIT_MIB="${VRAM_LIMIT_MIB:-22000}"   # live guard: total card usage limit
