@@ -1,0 +1,106 @@
+{
+  "label": "p5-vk-q4km",
+  "engine": "buun-vk",
+  "model": "/home/tom/Documents/Qwen3.8-27B-UD-Q4_K_M.gguf",
+  "site_port": 4001,
+  "total_task_seconds": 1630.0,
+  "stage_seconds": {
+    "3": 428,
+    "2": 1018,
+    "1": 177
+  },
+  "overall": {
+    "requests": 26,
+    "prompt_tokens": 4086,
+    "generated_tokens": 49584,
+    "prefill_tps": {
+      "avg": 195.5,
+      "min": 55.51,
+      "max": 631.55,
+      "n": 26
+    },
+    "decode_tps": {
+      "avg": 31.56,
+      "min": 30.53,
+      "max": 32.65,
+      "n": 26
+    },
+    "wall_s": {
+      "avg": 61.96,
+      "min": 2.8,
+      "max": 530.55,
+      "n": 26
+    }
+  },
+  "stages": {
+    "1": {
+      "requests": 13,
+      "prompt_tokens": 2976,
+      "generated_tokens": 5329,
+      "prefill_tps": {
+        "avg": 238.56,
+        "min": 55.51,
+        "max": 631.55,
+        "n": 13
+      },
+      "decode_tps": {
+        "avg": 32.19,
+        "min": 31.83,
+        "max": 32.65,
+        "n": 13
+      },
+      "wall_s": {
+        "avg": 13.34,
+        "min": 2.8,
+        "max": 66.31,
+        "n": 13
+      }
+    },
+    "2": {
+      "requests": 8,
+      "prompt_tokens": 577,
+      "generated_tokens": 31283,
+      "prefill_tps": {
+        "avg": 156.11,
+        "min": 82.98,
+        "max": 263.27,
+        "n": 8
+      },
+      "decode_tps": {
+        "avg": 31.12,
+        "min": 30.76,
+        "max": 31.46,
+        "n": 8
+      },
+      "wall_s": {
+        "avg": 126.64,
+        "min": 7.08,
+        "max": 530.55,
+        "n": 8
+      }
+    },
+    "3": {
+      "requests": 5,
+      "prompt_tokens": 533,
+      "generated_tokens": 12972,
+      "prefill_tps": {
+        "avg": 146.57,
+        "min": 104.76,
+        "max": 262.6,
+        "n": 5
+      },
+      "decode_tps": {
+        "avg": 30.65,
+        "min": 30.53,
+        "max": 30.85,
+        "n": 5
+      },
+      "wall_s": {
+        "avg": 84.88,
+        "min": 8.04,
+        "max": 353.99,
+        "n": 5
+      }
+    }
+  }
+}
