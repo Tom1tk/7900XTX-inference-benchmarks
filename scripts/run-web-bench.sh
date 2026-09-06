@@ -2,7 +2,7 @@
 # Agentic web-build benchmark for one model/engine version on the 7900 XTX.
 #
 # Usage: ./scripts/run-web-bench.sh <engine> <model-spec> <label> <index> [quant] [extra engine args...]
-#   engine      buun-vk | buun-hip | hipfire
+#   engine      buun-vk | buun-hip | mln-vk | mln-hip | hipfire
 #   model-spec  path to a .gguf (buun engines) or hipfire registry tag (hipfire)
 #   label       e.g. p5-vk-q4km-mtp   (folder and commit message both key off this)
 #   index       0,1,2,... unique per model version. Every port derives from it, so
@@ -56,6 +56,9 @@ EXTRA_ARGS=("$@")
 HIP_ROOT="/home/tom/.hipfire"
 BUUN_VK="/home/tom/Documents/buun-llama-cpp/build-vk/bin/llama-server"
 BUUN_HIP="/home/tom/Documents/buun-llama-cpp/build/bin/llama-server"
+# mainline llama.cpp (~/Documents/llama.cpp, b10819+) - MTP merged upstream
+MLN_VK="/home/tom/Documents/llama.cpp/build-vk/bin/llama-server"
+MLN_HIP="/home/tom/Documents/llama.cpp/build/bin/llama-server"
 
 case "$ENGINE" in
     buun-vk)
@@ -68,11 +71,21 @@ case "$ENGINE" in
         [[ -x "$BIN" ]] || { echo "ERROR: $BIN not found" >&2; exit 2; }
         [[ -f "$MODEL" ]] || { echo "ERROR: model not found: $MODEL" >&2; exit 2; }
         ;;
+    mln-vk)
+        BIN="$MLN_VK"
+        [[ -x "$BIN" ]] || { echo "ERROR: $BIN not found - build mainline Vulkan first (cmake -B build-vk -DGGML_VULKAN=ON)" >&2; exit 2; }
+        [[ -f "$MODEL" ]] || { echo "ERROR: model not found: $MODEL" >&2; exit 2; }
+        ;;
+    mln-hip)
+        BIN="$MLN_HIP"
+        [[ -x "$BIN" ]] || { echo "ERROR: $BIN not found" >&2; exit 2; }
+        [[ -f "$MODEL" ]] || { echo "ERROR: model not found: $MODEL" >&2; exit 2; }
+        ;;
     hipfire)
         export PATH="${HIP_ROOT}/bin:$PATH"
         command -v hipfire >/dev/null || { echo "ERROR: hipfire not on PATH" >&2; exit 2; }
         ;;
-    *) echo "ERROR: unknown engine '$ENGINE' (expected buun-vk|buun-hip|hipfire)" >&2; exit 2 ;;
+    *) echo "ERROR: unknown engine '$ENGINE' (expected buun-vk|buun-hip|mln-vk|mln-hip|hipfire)" >&2; exit 2 ;;
 esac
 
 command -v pi >/dev/null || { echo "ERROR: pi not on PATH" >&2; exit 2; }
@@ -188,7 +201,7 @@ else
         --jinja --no-mmproj --parallel 1
         "${EXTRA_ARGS[@]}"
     )
-    if [[ "$ENGINE" == "buun-vk" ]]; then
+    if [[ "$ENGINE" == "buun-vk" || "$ENGINE" == "mln-vk" ]]; then
         export GGML_VK_ALLOW_GRAPHICS_QUEUE=1
     fi
 

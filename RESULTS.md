@@ -13,7 +13,7 @@ procedure in RUNBOOK.md; web-bench (phase 5) results will land in `results/web/`
 | CPU / RAM | Ryzen 7 5800X3D (8C/16T) · 32 GB |
 | ROCm / Vulkan | ROCm 7.2.4-1 (amdclang 22.0) · RADV (vulkan-radeon) — amdvlk investigated, dropped (deprecated) |
 | Engines | `buun-llama-cpp` HIP build (`build/`) + Vulkan build (`build-vk/`); `hipfire` v0.3.0 beta (`~/.hipfire`, commit 7b16762); tinygrad cloned, untested |
-| Excluded engines | `Tom1tk/mtp-pflash-turboquant-hip` (cannot load this arch — lacks `ssm_conv1d`, MTP unused), mainline llama.cpp (no MTP at our build; b10791 merged MTP upstream later) |
+| Excluded engines | `Tom1tk/mtp-pflash-turboquant-hip` (cannot load this arch — lacks `ssm_conv1d`, MTP unused), mainline llama.cpp ~~(no MTP at our build)~~ — **no longer excluded**: checkout now at b10819 (post-merge), HIP binary supports `--spec-type draft-mtp` / `draft-dflash` / `draft-dspark`; joins the ladder as idx 2+ |
 
 Models in `~/Documents/`:
 
