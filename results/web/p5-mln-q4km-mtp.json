@@ -1,0 +1,106 @@
+{
+  "label": "p5-mln-q4km-mtp",
+  "engine": "mln-hip",
+  "model": "/home/tom/Documents/Qwen3.8-27B-UD-Q4_K_M.gguf",
+  "site_port": 4002,
+  "total_task_seconds": 1131.0,
+  "stage_seconds": {
+    "3": 256,
+    "2": 601,
+    "1": 262
+  },
+  "overall": {
+    "requests": 28,
+    "prompt_tokens": 25583,
+    "generated_tokens": 51933,
+    "prefill_tps": {
+      "avg": 279.05,
+      "min": 92.03,
+      "max": 691.83,
+      "n": 28
+    },
+    "decode_tps": {
+      "avg": 49.69,
+      "min": 40.17,
+      "max": 61.76,
+      "n": 28
+    },
+    "wall_s": {
+      "avg": 39.58,
+      "min": 3.37,
+      "max": 336.62,
+      "n": 28
+    }
+  },
+  "stages": {
+    "1": {
+      "requests": 14,
+      "prompt_tokens": 8054,
+      "generated_tokens": 12401,
+      "prefill_tps": {
+        "avg": 367.6,
+        "min": 92.03,
+        "max": 691.83,
+        "n": 14
+      },
+      "decode_tps": {
+        "avg": 51.76,
+        "min": 46.16,
+        "max": 61.76,
+        "n": 14
+      },
+      "wall_s": {
+        "avg": 18.32,
+        "min": 3.37,
+        "max": 65.38,
+        "n": 14
+      }
+    },
+    "2": {
+      "requests": 8,
+      "prompt_tokens": 16934,
+      "generated_tokens": 28884,
+      "prefill_tps": {
+        "avg": 206.24,
+        "min": 99.74,
+        "max": 500.24,
+        "n": 8
+      },
+      "decode_tps": {
+        "avg": 49.51,
+        "min": 42.01,
+        "max": 58.47,
+        "n": 8
+      },
+      "wall_s": {
+        "avg": 74.81,
+        "min": 5.72,
+        "max": 336.62,
+        "n": 8
+      }
+    },
+    "3": {
+      "requests": 6,
+      "prompt_tokens": 595,
+      "generated_tokens": 10648,
+      "prefill_tps": {
+        "avg": 169.53,
+        "min": 111.03,
+        "max": 295.39,
+        "n": 6
+      },
+      "decode_tps": {
+        "avg": 45.08,
+        "min": 40.17,
+        "max": 51.64,
+        "n": 6
+      },
+      "wall_s": {
+        "avg": 42.21,
+        "min": 5.05,
+        "max": 160.22,
+        "n": 6
+      }
+    }
+  }
+}
