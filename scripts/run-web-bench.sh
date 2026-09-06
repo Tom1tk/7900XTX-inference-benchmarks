@@ -233,6 +233,13 @@ if [[ -z "$OUTCOME" ]]; then
     sleep 2
 
     # Isolated pi config: never touch the operator's pi settings.
+    # hipfire validates the model id strictly (llama.cpp ignores it), so hipfire
+    # runs must advertise the registry tag, not the label.
+    if [[ "$ENGINE" == "hipfire" ]]; then
+        SERVED_MODEL_ID="$MODEL"
+    else
+        SERVED_MODEL_ID="$LABEL"
+    fi
     cat > "${PI_DIR}/models.json" <<EOF
 {
   "providers": {
@@ -240,7 +247,7 @@ if [[ -z "$OUTCOME" ]]; then
       "baseUrl": "http://127.0.0.1:${PROXY_PORT}/v1",
       "api": "openai-completions",
       "apiKey": "none",
-      "models": [ { "id": "${LABEL}", "name": "${LABEL}" } ]
+      "models": [ { "id": "${SERVED_MODEL_ID}", "name": "${LABEL}" } ]
     }
   }
 }
