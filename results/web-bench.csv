@@ -6,3 +6,4 @@ p5-vk-q4km-mtp,buun-vk,Qwen3.8-27B-UD-Q4_K_M.gguf,4000,1282.0,26,31328,50007,249
 p5-vk-q4km,buun-vk,Qwen3.8-27B-UD-Q4_K_M.gguf,4001,1630.0,26,4086,49584,195.5,55.51,631.55,31.56,30.53,32.65
 p5-hipfire-q8,hipfire,qwen3.8:27b,4002,0.0,0,0,0,None,None,None,None,None,None
 p5-hipfire-q8,hipfire,qwen3.8:27b,4002,26.0,0,0,0,None,None,None,None,None,None
+p5-hipfire-q8,hipfire,qwen3.8:27b,4002,29.0,3,0,0,693.5,591.8,755.0,50.13,45.6,57.1
