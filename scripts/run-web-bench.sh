@@ -94,14 +94,14 @@ mkdir -p "$SITE_DIR" "$PI_DIR"
 
 # --- Preflight: the GUI shares this card ------------------------------------
 echo "=== preflight ==="
-vram_mib() {
+vram_used_mib() {
     # rocm-smi column offsets differ between the Total and Used lines
     # (Total: $7, Used: $8 - the extra "Used" word shifts the number).
     "$ROCM_SMI" --showmeminfo vram 2>/dev/null \
-        | awk '/Total Memory/ {t=int($7/1048576)} /Total Used/ {u=int($8/1048576)} END {print t-u}'
+        | awk '/Total Used/ {u=int($8/1048576)} END {print u}'
 }
 VRAM_TOTAL=$(awk '/Total Memory/ {print int($7/1048576)}' < <("$ROCM_SMI" --showmeminfo vram 2>/dev/null))
-VRAM_USED=$(vram_mib)
+VRAM_USED=$(vram_used_mib)
 echo "VRAM: ${VRAM_USED}/${VRAM_TOTAL} MiB used | site :$SITE_PORT | engine :$SERVER_PORT | proxy :$PROXY_PORT"
 FREE=$(( VRAM_TOTAL - VRAM_USED ))
 # Rough floor: 24 GB-class card must leave >= 4 GiB for the desktop + headroom.
@@ -124,7 +124,7 @@ trap cleanup EXIT
 # before the desktop loses VRAM (a llama.cpp OOM is graceful, a desktop crash is not).
 guard_loop() {
     while kill -0 "$$" 2>/dev/null; do
-        U=$(vram_mib)
+        U=$(vram_used_mib)
         if [[ -n "$U" && "$U" -gt "$VRAM_LIMIT_MIB" ]]; then
             echo "VRAM-GUARD: ${U} MiB used > limit ${VRAM_LIMIT_MIB} - aborting run" >> "$VRAM_LOG"
             kill "$SERVER_PID" 2>/dev/null
