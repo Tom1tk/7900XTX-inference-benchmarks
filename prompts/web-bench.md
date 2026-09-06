@@ -9,6 +9,7 @@ substitutes:
 |---|---|
 | `{{MODEL_NAME}}` | the run label, e.g. `p5-vk-q4km-mtp` |
 | `{{PORT}}` | `4000 + run index`, so every site can be hosted simultaneously |
+| `{{QUANT}}` | the weights quant for the run, e.g. `Q4_K_M` |
 
 Edit the prose here, never in the generated per-run copies under `sites/`.
 
@@ -18,7 +19,7 @@ run its site as an ordinary background process on its dedicated port, so every
 run's site stays browsable side by side after the phase.
 
 <!-- STAGE 1 -->
-Create a folder called {{MODEL_NAME}} in the current working directory. Inside it, initialise a Node.js project and build a simple Express website about yourself ({{MODEL_NAME}}). The site should serve a single HTML page on http://localhost:{{PORT}}. Install all dependencies. Start the server as a background process so it keeps running after you finish, and confirm it responds on http://localhost:{{PORT}} before you finish.
+Create a folder called {{MODEL_NAME}} in the current working directory. Inside it, initialise a Node.js project and build a simple Express website about yourself. Your identity, which you should present accurately: you are Qwen3.8-27B, a 27-billion-parameter model running locally as a {{QUANT}}-quantized build. {{MODEL_NAME}} is only this benchmark run's experiment label, not your name. The site should serve a single HTML page on http://localhost:{{PORT}}. Install all dependencies. Start the server as a background process so it keeps running after you finish, and confirm it responds on http://localhost:{{PORT}} before you finish.
 <!-- END STAGE 1 -->
 
 <!-- STAGE 2 -->

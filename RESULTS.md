@@ -111,6 +111,8 @@ Prefill 250-330 t/s; cold-start TTFT ~11 s (shader JIT); 22.7 GB VRAM. hipfire w
 
 ### Recommended serve commands
 
+Sampling: **dialed per the [unsloth Qwen3.8-27B guide](https://huggingface.co/unsloth/Qwen3.8-27B-GGUF) instruct (non-thinking) set — `--temp 0.7 --top-p 0.8 --top-k 20 --min-p 0.0 --presence-penalty 1.5`** (repeat-penalty stays 1.0). llama.cpp defaults (0.8/0.95/40/0.05) are hotter than either recommended set; thinking mode wants temp 1.0/0.95. **All numbers above §2-§3 were measured at llama.cpp default sampling (temp 0.8) — treat relative rankings as valid, absolute values as @0.8.** hipfire's built-in was temp 0.3/top_p 0.8/top_k 20 (its own dial) — the fair test ran there; re-dialed to the Qwen instruct set (0.7/0.8/20/pres 1.5/rp 1.0) for the web-bench ladder so engines sample identically.
+
 **A. 100k max decode (Vulkan+MTP; ~1.2 GB spare):**
 ```sh
 GGML_VK_ALLOW_GRAPHICS_QUEUE=1 ~/Documents/buun-llama-cpp/build-vk/bin/llama-server \
@@ -118,6 +120,7 @@ GGML_VK_ALLOW_GRAPHICS_QUEUE=1 ~/Documents/buun-llama-cpp/build-vk/bin/llama-ser
   --device Vulkan0 -ngl 999 -ngld 999 --spec-type draft-mtp --spec-draft-n-max 3 \
   --spec-draft-type-k q4_0 --spec-draft-type-v q4_0 \
   -fa on -t 8 -b 2048 -ub 2048 -c 100000 -ctk q4_0 -ctv q4_0 \
+  --temp 0.7 --top-p 0.8 --top-k 20 --min-p 0.0 --presence-penalty 1.5 \
   --parallel 1 --no-mmproj --jinja --reasoning-budget 0 --port 8080
 ```
 
@@ -164,6 +167,8 @@ Open questions: quality parity (MQ4V2 + DFlash2 math) via NIAH gate; code-class 
 | MTP with plain f16 KV short ctx | Superseded | S2 (39.4) < V2 (65.9) |
 | hipfire DFlash2 q8 | **Conditional** | +34% mixed mean, +110% tool, -17% prose; quality gate pending |
 | hipfire asym3 KV | **Reject** | 3-bit, below floor; prefill 51 t/s |
+| Qwen instruct sampling set (0.7/0.8/20/0/1.5) | **Adopt (web bench onward)** | guide-mandated; both engines re-dialed identically; earlier benches ran @llama defaults 0.8 — flagged |
+| Agent identity in stage-1 prompt | **Adopt (amended)** | run 1 (pre-amendment) confabulated a "4.2B on Raspberry Pi 5" persona from the label mnemonic `p5`; run 0 grounded correctly — stochastic; prompt now states full name + quant |
 
 ## 7. Phase status
 
@@ -172,5 +177,5 @@ Open questions: quality parity (MQ4V2 + DFlash2 math) via NIAH gate; code-class 
 | 0 smoke · 1 engine baseline · 2 drafter | Done |
 | 3 quant sweep | Q4_K_M done; Q3_K_XL pulled, pending |
 | 4 backend/lever tests | Done (Table C) |
-| 5 agentic web build | **First run done.** `p5-vk-q4km-mtp` (Vulkan+MTP, Q4_K_M, 64k ctx): **1357 s total** (S1 245 / S2 769 / S3 331), decode 48.6 t/s avg, prefill 329.6 t/s, peak VRAM 23.8 GB, site live :4000. Findings: 32k ctx overflowed at stage 2 (agent session >32k → bumped default to 64k); pi 0.85 nests project folder one level deep (cosmetic). Control (no MTP) and hipfire runs pending |
+| 5 agentic web build | **Restarting from scratch.** Exploratory runs (Vulkan+MTP 1357 s; control 1743 s — MTP -22% end-to-end) are **voided as headline data**: ran at undialed llama.cpp sampling (temp 0.8) and pre-amendment prompt. Sites preserved in git history (`4cc8dd2`); ladder re-running dialed |
 | 6 quality gate | Not started |

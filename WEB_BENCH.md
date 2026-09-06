@@ -141,8 +141,9 @@ Update this table when a run claims an index. Never reuse one.
 
 | Index | Site port | Label | Engine / model | Status |
 |---|---|---|---|---|
-| 0 | 4000 | `p5-vk-q4km-mtp` | buun-vk, Q4_K_M + MTP n3, q4_0 KV, 64k | **ok 1357 s** — site live, quality review pending |
-| _(none yet)_ | | | | |
+| 0 | 4000 | `p5-vk-q4km-mtp` | buun-vk, Q4_K_M + MTP n3, q4_0 KV, 64k | superseded — undialed sampling, pre-amendment prompt (1357 s, git `4cc8dd2`) |
+| 1 | 4001 | `p5-vk-q4km` | buun-vk, Q4_K_M, q4_0 KV, 64k | superseded — same (1743 s) |
+| _(fresh ladder re-using 0/1/2 after artifact wipe)_ | | | | |
 
 ## 6. Prerequisites
 
@@ -155,6 +156,8 @@ Update this table when a run claims an index. Never reuse one.
   background processes and stay up after the run.
 - The agent's `pi` config is written per-run into `sites/<label>/.pi-agent/`.
   The operator's own pi config is never touched.
+- **Sampling is dialed per the unsloth Qwen3.8-27B guide's instruct set** (temp 0.7, top_p 0.8, top_k 20, min_p 0, presence 1.5) — baked into `run-web-bench.sh` for llama engines and set as hipfire config overrides, so both engines sample identically. Do not run the ladder undialed (first attempt did: temp 0.8 defaults → voided).
+- Stage 1 states the model's real identity (Qwen3.8-27B, `{{QUANT}}`) — the pre-amendment prompt let the agent confabulate a persona out of the label mnemonic (`p5` → "Raspberry Pi 5").
 - hipfire runs need `~/.hipfire/bin` on PATH and the registry sidecar patch from
   RESULTS.md §5 (upstream bug at time of writing).
 

@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 # Agentic web-build benchmark for one model/engine version on the 7900 XTX.
 #
-# Usage: ./scripts/run-web-bench.sh <engine> <model-spec> <label> <index> [extra engine args...]
+# Usage: ./scripts/run-web-bench.sh <engine> <model-spec> <label> <index> [quant] [extra engine args...]
 #   engine      buun-vk | buun-hip | hipfire
 #   model-spec  path to a .gguf (buun engines) or hipfire registry tag (hipfire)
 #   label       e.g. p5-vk-q4km-mtp   (folder and commit message both key off this)
 #   index       0,1,2,... unique per model version. Every port derives from it, so
 #               each site stays hosted after its run instead of fighting for :4000.
+#   quant       optional, substituted into the stage-1 prompt as {{QUANT}}
+#               (default Q4_K_M; must not start with '-')
 #
 # Drives `pi` through the three prompts in prompts/web-bench.md against the
 # engine, recording per-request prefill/decode throughput via
@@ -27,6 +29,9 @@ CTX="${CTX:-65536}"   # 32768 overflowed at stage 2 (pi 0.85 request hit 32827 t
 STAGE_TIMEOUT="${STAGE_TIMEOUT:-3600}"
 LOAD_TIMEOUT="${LOAD_TIMEOUT:-600}"
 VRAM_LIMIT_MIB="${VRAM_LIMIT_MIB:-22000}"   # live guard: total card usage limit
+# Qwen3.8 instruct-mode sampling (unsloth/Qwen3.8-27B-GGUF "Best Practices":
+# temp 0.7, top_p 0.80, top_k 20, min_p 0.0, presence 1.5, repeat 1.0).
+# llama.cpp defaults (0.8/0.95/40/0.05/0) are NOT the recommended set.
 ROCM_SMI="/opt/rocm/bin/rocm-smi"
 
 # --- Arguments --------------------------------------------------------------
@@ -36,6 +41,14 @@ if [[ $# -lt 4 ]]; then
 fi
 
 ENGINE="$1"; MODEL="$2"; LABEL="$3"; IDX="$4"; shift 4
+
+# Optional 5th positional arg: quant name for the {{QUANT}} prompt substitution.
+# Anything not starting with '-' is taken as the quant; the rest are engine args.
+QUANT="Q4_K_M"
+if [[ $# -gt 0 && "$1" != -* ]]; then
+    QUANT="$1"
+    shift
+fi
 EXTRA_ARGS=("$@")
 
 [[ "$IDX" =~ ^[0-9]+$ ]] || { echo "ERROR: index must be a non-negative integer, got '$IDX'" >&2; exit 2; }
@@ -171,6 +184,7 @@ else
         -ngl 999 -fa on -t 8
         -b 2048 -ub 2048
         -c "$CTX"
+        --temp 0.7 --top-p 0.8 --top-k 20 --min-p 0.0 --presence-penalty 1.5
         --jinja --no-mmproj --parallel 1
         "${EXTRA_ARGS[@]}"
     )
@@ -236,7 +250,7 @@ EOF
     for STAGE in 1 2 3; do
         PROMPT=$(awk "/<!-- STAGE ${STAGE} -->/{f=1;next} /<!-- END STAGE ${STAGE} -->/{f=0} f" \
                      prompts/web-bench.md \
-                 | sed -e "s|{{MODEL_NAME}}|${LABEL}|g" -e "s|{{PORT}}|${SITE_PORT}|g")
+                 | sed -e "s|{{MODEL_NAME}}|${LABEL}|g" -e "s|{{PORT}}|${SITE_PORT}|g" -e "s|{{QUANT}}|${QUANT}|g")
         if [[ -z "${PROMPT// }" ]]; then
             echo "ERROR: stage ${STAGE} prompt is empty - check prompts/web-bench.md markers" >&2
             OUTCOME="FAILED(prompt)"
