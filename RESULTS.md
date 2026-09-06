@@ -177,5 +177,5 @@ Open questions: quality parity (MQ4V2 + DFlash2 math) via NIAH gate; code-class 
 | 0 smoke · 1 engine baseline · 2 drafter | Done |
 | 3 quant sweep | Q4_K_M done; Q3_K_XL pulled, pending |
 | 4 backend/lever tests | Done (Table C) |
-| 5 agentic web build | **Dialed ladder running.** Run 0 `p5-vk-q4km-mtp` (dialed): **1282 s**, decode 45.5 avg, **MTP acceptance 72.1% mean** (vs ~62% @temp 0.8) — but **quality FAIL**: stage-2 HTML shipped with unclosed `<script>` → `.reveal` scroll-gating never fires → page renders background/ticker only. Identity amendment verified (Qwen3.8-27B self-description, zero Pi-5 confabulation). First ladder's one-shot variance is the story: undialed MTP site rendered fine, dialed one broke. Control + hipfire pending |
+| 5 agentic web build | **Dialed pair done, hipfire pending.** MTP vs control, same prompt+sampling: **1282 vs 1630 s (-21%)**, decode 45.5 vs 31.6 t/s (+44%), prefill 249.6 vs 195.5, MTP accept 72.1%, peak VRAM 23.1 vs 17.2 GiB. Quality one-shot variance: MTP site FAIL (unclosed `<script>` → reveal gating dead), control site well-formed and renders. Undialed pair agreed on timing (1357/1743, -22%) but quality inverted (undialed MTP fine, undialed control richer) — site quality is a dice roll at n=1; timing is the signal |
 | 6 quality gate | Not started |

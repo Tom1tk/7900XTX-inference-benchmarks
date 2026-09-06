@@ -142,7 +142,8 @@ Update this table when a run claims an index. Never reuse one.
 | Index | Site port | Label | Engine / model | Status |
 |---|---|---|---|---|
 | 0 | 4000 | `p5-vk-q4km-mtp` | buun-vk, Q4_K_M + MTP n3, q4_0 KV, 64k | **speed ok 1282 s** (S1 96/S2 877/S3 297, accept 72.1%) — **quality FAIL**: stage-2 shipped unclosed `<script>` → reveal-on-scroll never fires → page renders as background+ticker only |
-| 1 | 4001 | `p5-vk-q4km` | buun-vk, Q4_K_M, q4_0 KV, 64k | running (dialed) |
+| 1 | 4001 | `p5-vk-q4km` | buun-vk, Q4_K_M, q4_0 KV, 64k | **ok 1630 s (dialed)** — S1 177/S2 1018/S3 428, decode 31.6 avg, peak VRAM 17.2 GiB; HTML balanced (2/2 script tags) — renders |
+| _(2 = hipfire, next)_ | | | | |
 
 ## 6. Prerequisites
 
