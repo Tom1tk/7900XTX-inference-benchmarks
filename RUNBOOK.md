@@ -36,8 +36,9 @@
 2. Q3_K_XL ladder (pulled): llama-bench + bench_mix + web bench if it wins VRAM headroom.
 3. MTP context ceiling binary search (32k→100k, Vulkan, keep ≥2 GB headroom).
 4. `--spec-draft-n-max` / `--spec-draft-p-min` sweep.
-5. Quality gate (NIAH) for q4_0/turbo4 KV and MQ4V2 — scheduled last on purpose.
-6. tinygrad 27B from TTY (46 t/s claimed).
+5. hipfire: re-test web bench when tool calling (OpenAI tool_calls) ships — currently unusable for pi/opencode.
+6. Quality gate (NIAH) for q4_0/turbo4 KV and MQ4V2 — scheduled last on purpose.
+7. tinygrad 27B from TTY (46 t/s claimed).
 
 ### Parked
 - VBR dynamic KV (HIP only, may help MTP+100k headroom).

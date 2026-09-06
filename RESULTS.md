@@ -168,6 +168,7 @@ Open questions: quality parity (MQ4V2 + DFlash2 math) via NIAH gate; code-class 
 | hipfire DFlash2 q8 | **Conditional** | +34% mixed mean, +110% tool, -17% prose; quality gate pending |
 | hipfire asym3 KV | **Reject** | 3-bit, below floor; prefill 51 t/s |
 | Qwen instruct sampling set (0.7/0.8/20/0/1.5) | **Adopt (web bench onward)** | guide-mandated; both engines re-dialed identically; earlier benches ran @llama defaults 0.8 — flagged |
+| hipfire OpenAI tool calling | **Reject (v0.3.0 beta)** | probe: request with `tools` returns the call as plain text `<tool_call>…` in `content`, `finish_reason: stop` — no `tool_calls` field; strict agents (pi/opencode) see turn-end and stop. The +110% tool-call decode from §3 measured tool-OUTPUT *text* decoding, not function calling. Re-test when hipfire ships tools |
 | Agent identity in stage-1 prompt | **Adopt (amended)** | run 1 (pre-amendment) confabulated a "4.2B on Raspberry Pi 5" persona from the label mnemonic `p5`; run 0 grounded correctly — stochastic; prompt now states full name + quant |
 
 ## 7. Phase status
@@ -177,5 +178,5 @@ Open questions: quality parity (MQ4V2 + DFlash2 math) via NIAH gate; code-class 
 | 0 smoke · 1 engine baseline · 2 drafter | Done |
 | 3 quant sweep | Q4_K_M done; Q3_K_XL pulled, pending |
 | 4 backend/lever tests | Done (Table C) |
-| 5 agentic web build | **Dialed pair done, hipfire pending.** MTP vs control, same prompt+sampling: **1282 vs 1630 s (-21%)**, decode 45.5 vs 31.6 t/s (+44%), prefill 249.6 vs 195.5, MTP accept 72.1%, peak VRAM 23.1 vs 17.2 GiB. Quality one-shot variance: MTP site FAIL (unclosed `<script>` → reveal gating dead), control site well-formed and renders. Undialed pair agreed on timing (1357/1743, -22%) but quality inverted (undialed MTP fine, undialed control richer) — site quality is a dice roll at n=1; timing is the signal |
+| 5 agentic web build | **Pair + engine verdict done.** MTP vs control, same prompt+sampling: **1282 vs 1630 s (-21%)**, decode 45.5 vs 31.6 t/s (+44%), prefill 249.6 vs 195.5, MTP accept 72.1%, peak VRAM 23.1 vs 17.2 GiB. Quality = one-shot dice (MTP site FAIL: unclosed `<script>`; control site well-formed, renders). Undialed pair agreed on timing (1357/1743, -22%) but quality inverted — site quality is a dice roll at n=1; timing is the signal. **hipfire run VOIDED — no OpenAI tool_calls (plain-text tool calls) → unusable for pi/opencode.** Ladder answer for agentic serving: **Vulkan+MTP** |
 | 6 quality gate | Not started |

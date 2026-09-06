@@ -143,7 +143,8 @@ Update this table when a run claims an index. Never reuse one.
 |---|---|---|---|---|
 | 0 | 4000 | `p5-vk-q4km-mtp` | buun-vk, Q4_K_M + MTP n3, q4_0 KV, 64k | **speed ok 1282 s** (S1 96/S2 877/S3 297, accept 72.1%) — **quality FAIL**: stage-2 shipped unclosed `<script>` → reveal-on-scroll never fires → page renders as background+ticker only |
 | 1 | 4001 | `p5-vk-q4km` | buun-vk, Q4_K_M, q4_0 KV, 64k | **ok 1630 s (dialed)** — S1 177/S2 1018/S3 428, decode 31.6 avg, peak VRAM 17.2 GiB; HTML balanced (2/2 script tags) — renders |
-| _(2 = hipfire, next)_ | | | | |
+| 2 | 4002 | `p5-hipfire-q8` | hipfire DFlash2, q8 KV | **VOIDED — engine fail**: hipfire v0.3.0 beta returns tool calls as plain text (no OpenAI `tool_calls`, `finish_reason: stop`) → pi issues 1 request/stage and exits; 29 s "garbage-success". Probe: `/tmp/opencode/hipfire-tools-probe.json` — calculator request returned `<tool_call>\n<function=calculator>…` as content |
+| _(none further)_ | | | | |
 
 ## 6. Prerequisites
 
